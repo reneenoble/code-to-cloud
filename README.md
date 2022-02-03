@@ -1,7 +1,7 @@
 # Code to Cloud
 ## *An interactive web essentials build-along!*
 
-###Please take part in the build-along by contributing your own party invitation theme!
+**Get involved in the build-along by contributing your own party invitation theme!**
 
 To do this...
 1) Fork the repo
