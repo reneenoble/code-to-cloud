@@ -16,9 +16,10 @@
   }
 
   #invite {
-      height: 800px;
-      width: 800px;
       background-image: url("imgs/cat-party.jpg");
       background-size: contain;
-      padding: 180px;
+      color: rgb(235, 150, 75); 
+      height: 600px;
+      width: 600px;
+      padding: 80px;
   }
