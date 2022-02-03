@@ -6,18 +6,18 @@
 
     <body>
         <div id="invite">
-            <h3>Dear Jack,</h3>
+            <h3>Dear {{ to }},</h3>
 
-            <p>We're very excited to invate you <strong>Bibi's Birthday Party</strong>!</p>
+            <p>We're very excited to invate you <strong>{{ event_name }}</strong>!</p>
 
             <p>
-                <strong>Date:</strong> Thursday the 20th of January<br>
-                <strong>Time:</strong> 6pm
+                <strong>Date:</strong> {{ date }}<br>
+                <strong>Time:</strong> {{ time }}
             </p>
 
             <p>
                 See you there!<br>
-                <em>Renee</em>
+                <em>{{ sender }}</em>
             </p>
         </div>
 
