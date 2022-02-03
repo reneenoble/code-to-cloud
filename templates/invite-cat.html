@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="../static/cat-style.css">
+    </head>
+
+    <body>
+        <div id="invite">
+            <h3>Dear {{ to }},</h3>
+
+            <p>Come join us for a purrr-fect day at <strong>{{ event_name }}</strong>!</p>
+
+            <p>
+                <strong>Date:</strong> {{ date }}<br>
+                <strong>Time:</strong> {{ time }}
+            </p>
+
+            <p>
+                See you there!<br>
+                <em>{{ sender }}</em>
+            </p>
+        </div>
+
+    </body>
