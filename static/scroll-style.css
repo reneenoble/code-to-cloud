@@ -1,0 +1,25 @@
+* {
+    box-sizing: border-box;
+  }
+
+  body {
+      font-family:fantasy;
+      color: rgb(163, 115, 10);
+      text-align: center;
+  }
+
+  h3 {
+      font-size: 36px;
+  }
+
+  p {
+      font-size: 22px;
+  }
+
+  #invite {
+      height: 800px;
+      width: 800px;
+      background-image: url("imgs/scroll-party.png");
+      background-size: contain;
+      padding: 160px 190px 180px 190px;
+  }
