@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="../static/scroll-style.css">
+    </head>
+
+    <body>
+        <div id="invite">
+            <h3>Dear {{ to }},</h3>
+
+            <p>We're very excited to invite you <strong>{{ event_name }}</strong>!</p>
+
+            <p>
+                <strong>Date:</strong> {{ date }}<br>
+                <strong>Time:</strong> {{ time }}
+            </p>
+
+            <p>
+                See you there!<br>
+                <em>{{ sender }}</em>
+            </p>
+        </div>
+
+    </body>
+</html>
