@@ -23,3 +23,16 @@
       background-size: contain;
       padding: 160px 190px 180px 190px;
   }
+
+  #rsvp-button {
+    background: rgb(231, 199, 141);
+    border: none;
+    height: 40px;
+    width: 166px;
+    font-size: 20px;
+    font-family: fantasy;
+    line-height: 45px;
+    border-radius: 15px;
+    font-style: italic;
+    box-shadow: 5px 5px gray;
+  }
