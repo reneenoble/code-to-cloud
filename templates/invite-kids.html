@@ -19,6 +19,12 @@
                 See you there!<br>
                 <em>{{ sender }}</em>
             </p>
+
+            <button id="rsvp-button" onclick="sendRsvp(this.value)" value="{{ to }},{{ eventId }}">I'll be there!</button>
+            <h2 id="see-you-there" hidden="true">Great! We'll see you there! 🎉</h2>
+
         </div>
 
     </body>
+
+    <script src="static/rsvp.js"></script>
