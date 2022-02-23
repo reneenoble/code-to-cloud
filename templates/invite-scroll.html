@@ -8,7 +8,7 @@
         <div id="invite">
             <h3>Dear {{ to }},</h3>
 
-            <p>We're very excited to invite you <strong>{{ event_name }}</strong>!</p>
+            <p>Your presence is requested at <strong>{{ event_name }}</strong>!</p>
 
             <p>
                 <strong>Date:</strong> {{ date }}<br>
@@ -19,7 +19,14 @@
                 See you there!<br>
                 <em>{{ sender }}</em>
             </p>
+
+            <button id="rsvp-button" onclick="sendRsvp(this.value)" value="{{ to }},{{ eventId }}">I'll be there!</button>
+            <div id="see-you-there" hidden="true">
+              <img src="static/imgs/scroll-rsvp.png">
+            </div>
         </div>
 
     </body>
+
+    <script src="static/rsvp.js"></script>
 </html>
