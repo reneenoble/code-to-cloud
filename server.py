@@ -22,6 +22,12 @@ print(connect_str)
 # container_client = blob_service_client.create_container(container_name)
 
 
+@app.route("/s")
+def s():
+    return connect_str
+
+
+
 @app.route("/")
 def form():
     return render_template("form.html")
