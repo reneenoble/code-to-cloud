@@ -131,5 +131,5 @@ def sync_blob(event_ID, attendee):
     
 
 if __name__ == '__main__':
-    app.run(debug=True, use_reloader=True, host='0.0.0.0', port=8080)
+    app.run(debug=True, use_reloader=True, host='0.0.0.0', port=8000)
     # sync_blob("Tina|bday party", "Renee")
