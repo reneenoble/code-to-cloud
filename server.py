@@ -13,19 +13,12 @@ local_path = "./data"
 
 
 # # Make Containter 
-connect_str = os.getenv('AZURE_STORAGE_CONNECTION_STRING')
-print(connect_str)
+# connect_str = os.getenv('AZURE_STORAGE_CONNECTION_STRING')
 # blob_service_client = BlobServiceClient.from_connection_string(connect_str)
 
 # # Create a unique name for the container
 # container_name = "rsvps"
 # container_client = blob_service_client.create_container(container_name)
-
-
-@app.route("/s")
-def s():
-    return connect_str
-
 
 
 @app.route("/")
