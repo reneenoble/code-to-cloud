@@ -1,1 +1,3 @@
 flask
+dotenv
+azure-storage-blob
