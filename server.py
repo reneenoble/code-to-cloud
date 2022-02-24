@@ -1,7 +1,7 @@
 from sqlite3 import connect
 from flask import Flask, request, render_template
 import json, os
-import dotenv
+# import dotenv
 from azure.storage.blob import BlobServiceClient, BlobClient, ContainerClient
 from azure.core.exceptions import ResourceExistsError, ResourceNotFoundError
 
@@ -9,8 +9,8 @@ app = Flask('app')
 
 local_path = "./data"
 
-from dotenv import load_dotenv
-load_dotenv(".env")
+# from dotenv import load_dotenv
+# load_dotenv(".env")
 
 
 # Make Containter 
