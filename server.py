@@ -1,18 +1,20 @@
+from sqlite3 import connect
 from flask import Flask, request, render_template
 import json, os
-# import dotenv
+import dotenv
 # from azure.storage.blob import BlobServiceClient, BlobClient, ContainerClient
 
 app = Flask('app')
 
 local_path = "./data"
 
-# from dotenv import load_dotenv
-# load_dotenv(".env")
+from dotenv import load_dotenv
+load_dotenv(".env")
 
 
 # # Make Containter 
-# connect_str = os.getenv('AZURE_STORAGE_CONNECTION_STRING')
+connect_str = os.getenv('AZURE_STORAGE_CONNECTION_STRING')
+print(connect_str)
 # blob_service_client = BlobServiceClient.from_connection_string(connect_str)
 
 # # Create a unique name for the container
