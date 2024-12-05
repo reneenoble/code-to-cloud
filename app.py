@@ -83,6 +83,7 @@ def rsvp():
     event_data = data["ID"].split(",")
     attendee = event_data[0]
     event_ID = event_data[1]
+    print("RSVP, conect str", connect_str)
     
     try:
         sync_blob(event_ID, attendee)
