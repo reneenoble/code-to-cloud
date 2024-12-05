@@ -5,43 +5,42 @@ import json, os
 from azure.storage.blob import BlobServiceClient, BlobClient, ContainerClient
 from azure.core.exceptions import ResourceExistsError, ResourceNotFoundError
 
-
+# Create the Flask app
 app = Flask('app')
-
-local_path = "./data"
 
 ############################################################################################################
 # Use dotenv when you want to run this locally and get your environement variables out of the .env file
 ############################################################################################################
-
-import dotenv
 from dotenv import load_dotenv
 load_dotenv(".env")
 ############################################################################################################
 
-
-os.makedirs("data", exist_ok=True)
-
 # Make Containter 
 connect_str = os.getenv('AZURE_STORAGE_CONNECTION_STRING')
-print(connect_str)
 blob_service_client = BlobServiceClient.from_connection_string(connect_str)
+
+ # Create a local directory to hold RSVP files
+local_path = "./data"
+os.makedirs("data", exist_ok=True)
 
 # Create a unique name for the container
 container_name = "rsvps-live"
 
+# Create the container in Azure blob storage
 try:
     container_client = blob_service_client.create_container(container_name)
 except ResourceExistsError:
     container_client = blob_service_client.get_container_client(container_name)
 
+################################################################################
+#### Routes ####################################################################
 
-
+# The route where you see the form to create an invite
 @app.route("/")
 def form():
     return render_template("form.html")
 
-
+# The route where you see the invite
 @app.route("/view")
 def view_invite():
     # to = "Sarah"
@@ -59,10 +58,9 @@ def view_invite():
     eventId = sender + "|" + event
   
     template = "invite-" + style + ".html"
-    
-
     return render_template(template, to=to, event_name=event, date=date, time=time, sender=sender, eventId=eventId)
 
+# The route that lists all the files that exist in the storage account (all the events that have RSVPs)
 @app.route("/events")
 def events():
     blob_list = container_client.list_blobs()
@@ -71,6 +69,7 @@ def events():
 
     return render_template("events.html", event_list=blob_list)
 
+# The route that lists all the RSVPs for a specific event
 @app.route("/event-rsvps/<event_file>")
 def event_rsvps(event_file):
     blob_client = blob_service_client.get_blob_client(container=container_name, blob=event_file)
@@ -79,7 +78,7 @@ def event_rsvps(event_file):
     print(attendees)
     return render_template("event-rsvps.html", attendees=attendees)
 
-
+# The route that handles the RSVP button from the invitaiton page
 @app.route("/rsvp", methods=('GET', 'POST'))
 def rsvp():
     data = request.json
@@ -88,6 +87,7 @@ def rsvp():
     event_ID = event_data[1]
     print("RSVP, conect str", connect_str)
     
+    # Attempt to sync the blob
     try:
         sync_blob(event_ID, attendee)
         print("Blob sync succeeded")
@@ -96,7 +96,7 @@ def rsvp():
         print("Blob sync failed")
         return json.dumps({'success':True}), 400, {'ContentType':'application/json'}
 
-
+# A helper function that handles updating or creating a blob in Azure blob storage
 def sync_blob(event_ID, attendee):
     filename = event_ID + ".txt"
     local_file = os.path.join(local_path, filename)
@@ -104,6 +104,7 @@ def sync_blob(event_ID, attendee):
 
     blob_client = blob_service_client.get_blob_client(container=container_name, blob=filename)
 
+    # Try to download the blob, if it exists. Then update the file with the new attendee
     try:
         print("\nDownloading blob to \n\t" + local_file)
 
@@ -124,7 +125,7 @@ def sync_blob(event_ID, attendee):
                 blob_client.upload_blob(data)
             print(f"File ({filename}) updated on blob.")
 
-    # The blob wasn't there, oh no!
+    # The blob wasn't there, oh no! Let's make a new one, this must be the first RSVP for this event
     except ResourceNotFoundError:
         # If the file doesn't exist, make a local file, conatining the single attendee from the request
         with open(local_file, "w") as f:
@@ -136,6 +137,6 @@ def sync_blob(event_ID, attendee):
             print("New file uploaded to blob.")
 
     
-
+# Run the app
 if __name__ == '__main__':
     app.run(debug=True, use_reloader=True, host='0.0.0.0', port=8000)
