@@ -1,11 +1,11 @@
-async function sendRsvp(eventId) {
+async function sendRsvp(eventRsvp) {
     but = document.getElementById("rsvp-button")
     but.disabled = true;
 
     rsvpheader = document.getElementById("see-you-there")
     rsvpheader.hidden = false;
 
-    data = JSON.stringify({"ID": eventId})
+    data = JSON.stringify({"event-rsvp": eventRsvp})
 
     const respone = await fetch("/rsvp", {
         method: 'POST',

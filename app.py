@@ -81,7 +81,7 @@ def event_rsvps(event_file):
 @app.route("/rsvp", methods=('GET', 'POST'))
 def rsvp():
     data = request.json
-    event_data = data["ID"].split(",")
+    event_data = data["event-rsvp"].split(",")
     attendee = event_data[0]
     event_ID = event_data[1]
     print("RSVP, conect str", connect_str)
