@@ -1,8 +1,7 @@
-from sqlite3 import connect
 from flask import Flask, request, render_template
 import json, os
 
-from azure.storage.blob import BlobServiceClient, BlobClient, ContainerClient
+from azure.storage.blob import BlobServiceClient
 from azure.core.exceptions import ResourceExistsError, ResourceNotFoundError
 
 # Create the Flask app
