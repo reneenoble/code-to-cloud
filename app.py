@@ -1,7 +1,7 @@
 from sqlite3 import connect
 from flask import Flask, request, render_template
 import json, os
-# import dotenv
+
 from azure.storage.blob import BlobServiceClient, BlobClient, ContainerClient
 from azure.core.exceptions import ResourceExistsError, ResourceNotFoundError
 
@@ -9,12 +9,19 @@ app = Flask('app')
 
 local_path = "./data"
 
+############################################################################################################
+# Use dotenv when you want to run this locally and get your environement variables out of the .env file
+############################################################################################################
+
+# import dotenv
 # from dotenv import load_dotenv
 # load_dotenv(".env")
+############################################################################################################
 
 
 # Make Containter 
 connect_str = os.getenv('AZURE_STORAGE_CONNECTION_STRING')
+print(connect_str)
 blob_service_client = BlobServiceClient.from_connection_string(connect_str)
 
 # Create a unique name for the container
@@ -47,12 +54,7 @@ def view_invite():
     sender = request.args.get("sender")
     style = request.args.get('style')
     eventId = sender + "|" + event
-
-
-    # http://192.168.1.122:8080/view?style=kids
-    # http://192.168.1.122:8080/view?event=Bibi's+Bday&to=Clair&date=Monday+32nd+of+Mocktober&time=4pm&sender=Renee&style=cat
-    
-
+  
     template = "invite-" + style + ".html"
     
 
@@ -81,10 +83,6 @@ def rsvp():
     event_data = data["ID"].split(",")
     attendee = event_data[0]
     event_ID = event_data[1]
-    filename = event_ID + ".txt"
-
-    # filepath = os.path.join(local_path, filename)
-
     
     try:
         sync_blob(event_ID, attendee)
@@ -96,6 +94,7 @@ def rsvp():
 def sync_blob(event_ID, attendee):
     filename = event_ID + ".txt"
     local_file = os.path.join(local_path, filename)
+    print(local_file)
 
     blob_client = blob_service_client.get_blob_client(container=container_name, blob=filename)
 
@@ -117,6 +116,7 @@ def sync_blob(event_ID, attendee):
             with open(local_file, "rb") as data:
                 blob_client.delete_blob()
                 blob_client.upload_blob(data)
+            print(f"File ({filename}) updated on blob.")
 
     # The blob wasn't there, oh no!
     except ResourceNotFoundError:
@@ -127,9 +127,9 @@ def sync_blob(event_ID, attendee):
         # Write the file to Azure blob
         with open(local_file, "rb") as data:
             blob_client.upload_blob(data)
+            print("New file uploaded to blob.")
 
     
 
 if __name__ == '__main__':
     app.run(debug=True, use_reloader=True, host='0.0.0.0', port=8000)
-    # sync_blob("Tina|bday party", "Renee")
