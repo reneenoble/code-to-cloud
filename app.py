@@ -96,6 +96,9 @@ def rsvp():
         print("Blob sync failed")
         return json.dumps({'success':True}), 400, {'ContentType':'application/json'}
 
+################################################################################
+################################################################################
+
 # A helper function that handles updating or creating a blob in Azure blob storage
 def sync_blob(event_ID, attendee):
     filename = event_ID + ".txt"
