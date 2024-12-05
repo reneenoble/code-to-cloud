@@ -5,6 +5,7 @@ async function sendRsvp(eventRsvp) {
     rsvpheader = document.getElementById("see-you-there")
     rsvpheader.hidden = false;
 
+    // Sends back the event ID and the attendee name
     data = JSON.stringify({"event-rsvp": eventRsvp})
 
     const respone = await fetch("/rsvp", {
