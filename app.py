@@ -5,6 +5,7 @@ import json, os
 from azure.storage.blob import BlobServiceClient, BlobClient, ContainerClient
 from azure.core.exceptions import ResourceExistsError, ResourceNotFoundError
 
+
 app = Flask('app')
 
 local_path = "./data"
@@ -13,11 +14,13 @@ local_path = "./data"
 # Use dotenv when you want to run this locally and get your environement variables out of the .env file
 ############################################################################################################
 
-# import dotenv
-# from dotenv import load_dotenv
-# load_dotenv(".env")
+import dotenv
+from dotenv import load_dotenv
+load_dotenv(".env")
 ############################################################################################################
 
+
+os.makedirs("data", exist_ok=True)
 
 # Make Containter 
 connect_str = os.getenv('AZURE_STORAGE_CONNECTION_STRING')
@@ -87,8 +90,10 @@ def rsvp():
     
     try:
         sync_blob(event_ID, attendee)
+        print("Blob sync succeeded")
         return json.dumps({'success':True}), 200, {'ContentType':'application/json'}
     except:
+        print("Blob sync failed")
         return json.dumps({'success':True}), 400, {'ContentType':'application/json'}
 
 
